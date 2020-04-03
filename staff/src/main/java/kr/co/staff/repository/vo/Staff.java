@@ -3,7 +3,15 @@ package kr.co.staff.repository.vo;
 import lombok.Data;
 
 @Data
-public class Staff {
+public class Staff extends Pagination {
+	public Staff() {
+		super();
+	}
+	
+	public Staff(int pageNo, int listSize) {
+		super(pageNo, listSize);
+	}
+	
 	//사원번호
 	private int staffNo;
 	//사원이름

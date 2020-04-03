@@ -36,9 +36,10 @@
 
 	
 	<!--사원전체검색 -->
-	<select id="selectStaff" resultType="Staff">
+	<select id="selectStaff" parameterType="Staff" resultType="Staff">
 		select *
-		from tb_staff
+		  from tb_staff
+		 LIMIT #{startList}, #{listSize}
 	</select>
 	
 	<!--사원검색 -->
@@ -62,6 +63,13 @@
 				and staff_ph like CONCAT('%',#{staffPh},'%')
 			</if>
 		</where>
+		LIMIT #{startList}, #{listSize}
+	</select>
+	
+	<!-- 전체 사원 페이징을 위한 값 -->
+	<select id="staffCnt" resultType="int">
+		select count(*)
+	      from tb_staff
 	</select>
 
 

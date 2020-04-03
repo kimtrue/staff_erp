@@ -6,7 +6,10 @@ import kr.co.staff.repository.vo.Staff;
 
 public interface StaffDAO {
 	//전체사원 조회
-	List<Staff> selectStaff();
+	List<Staff> selectStaff(Staff staff);
+	//전체사원 조회 페이징을 위한 
+	int staffCnt();
+	
 	
 	//사원등록
 	void staffRegist(Staff staff);

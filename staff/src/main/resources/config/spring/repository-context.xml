@@ -42,9 +42,7 @@
 		<property name="basePackage" value="kr.co.staff.repository.dao" />
 	</bean>
 
-
 	
-
 
 	<!-- 트占쏙옙占쏙옙占� 처占쏙옙 -->
 	<bean id="transactionManager"

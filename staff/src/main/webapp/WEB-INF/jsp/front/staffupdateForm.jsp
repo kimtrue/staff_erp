@@ -62,7 +62,7 @@
 	</form>
 		<div id="submitt">
 			<button id="sbutton">수정</button>
-			<button id="cancel" type="button" onclick="location.href='/kr.co.staff/front/main.do'">취소</button>
+			<button id="cancel" type="button" onclick="location.href='/staff/front/main.do'">취소</button>
 		</div>
 
 

@@ -41,6 +41,12 @@ td, th {
 .center {
     text-align: center;
 }
+
+#borderhidden {
+	border-right: hidden;
+	border-top: hidden;
+	border-left: hidden;
+}
 #search {
     width: 150px;
 }
@@ -56,4 +62,18 @@ td, th {
 }
 #gDate {
     padding-left: 33px;
+}
+
+
+li.page-item {
+	display: inline-block;
+}
+
+li.page-item.active {
+	background: #193669;
+	color: white;
+}
+
+ul.pagination {
+	text-align: center;
 }

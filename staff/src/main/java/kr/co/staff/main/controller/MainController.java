@@ -1,6 +1,8 @@
 package kr.co.staff.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,22 +49,34 @@ public class MainController {
 	//사원 전체조회
 	@RequestMapping("/stafflist.do")
 	@ResponseBody
-	public List<Staff> staffList() {
-		return service.staffList();
+	public Map<String, Object> staffList(Staff staff) {
+		staff.setListCnt(service.getStaffCnt());
+		Map<String, Object> map= new HashMap<>();
+		staff.pageInfo(staff.getPage(), staff.getRange(), staff.getListCnt());
+		map.put("stafflist", service.staffList(staff));
+		map.put("pagination", staff);
+		
+		return map;
 	}
 	
 	//사원삭제
 	@RequestMapping("/deletestaff.do")
 	@ResponseBody
-	public List<Staff> deletestaff(int staffNo) {
-		return service.deleteStaff(staffNo);
+	public List<Staff> deletestaff(Staff staff) {
+		staff.setListCnt(service.getStaffCnt());
+		return service.deleteStaff(staff);
 	}
 	
 	//사원 검색조회
 	@RequestMapping("/staffsearch.do")
 	@ResponseBody
-	public List<Staff> staffSearch(Staff staff){
-		return service.staffSearch(staff);
+	public Map<String, Object> staffSearch(Staff staff){
+		staff.setListCnt(service.getStaffCnt());
+		Map<String, Object> map= new HashMap<>();
+		staff.pageInfo(staff.getPage(), staff.getRange(), staff.getListCnt());
+		map.put("stafflist", service.staffSearch(staff));
+		map.put("pagination", staff);
+		return map;
 	}
 
 }

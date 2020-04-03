@@ -19,8 +19,8 @@ public class StaffServiceImpl implements StaffService {
 	
 	//전체검색
 	@Override
-	public List<Staff> staffList() {
-		return dao.selectStaff();
+	public List<Staff> staffList(Staff staff) {
+		return dao.selectStaff(staff);
 	}
 	//등록
 	@Override
@@ -45,9 +45,13 @@ public class StaffServiceImpl implements StaffService {
 	}
 	//삭제
 	@Override
-	public List<Staff> deleteStaff(int staffNo) {
-		dao.deleteStaff(staffNo);
-		return dao.selectStaff();
+	public List<Staff> deleteStaff(Staff staff) {
+		dao.deleteStaff(staff.getStaffNo());
+		return dao.staffSearch(staff);
+	}
+	@Override
+	public int getStaffCnt() {
+		return dao.staffCnt();
 	}
 	
 	

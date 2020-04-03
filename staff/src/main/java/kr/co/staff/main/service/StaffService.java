@@ -7,7 +7,9 @@ import kr.co.staff.repository.vo.Staff;
 
 public interface StaffService {
 	//사원전체조회
-	public List<Staff> staffList();
+	public List<Staff> staffList(Staff staff);
+	//리뷰 페이징 처리를 위한
+	public int getStaffCnt();
 	
 	//사원 수정폼 정보
 	public Staff staffupdateForm(int staffNo);
@@ -21,7 +23,7 @@ public interface StaffService {
 	//사원검색
 	public List<Staff> staffSearch(Staff staff);
 	
-	public List<Staff> deleteStaff(int staffNo);
+	public List<Staff> deleteStaff(Staff staff);
 
 
 }

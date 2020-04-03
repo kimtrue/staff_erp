@@ -67,6 +67,8 @@
 		</div>
 
 		<div id="result"></div>
+		<!-- 페이징 -->
+		<div id="paginationBox"></div>
 
 
 
