@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.staff.repository.dao.StaffDAO">
+
+	<!--사원 등록 -->
+	<insert id="staffRegist" parameterType="Staff">
+		INSERT INTO tb_staff (staff_name, staff_rank, staff_email, staff_ph) 
+				VALUES(#{staffName}, #{staffRank}, #{staffEmail}, #{staffPh})
+	</insert>
+	
+	<!-- 기존 사원 정보 -->
+	<select id="selectStaffOne" parameterType="int" resultType="Staff">
+	  select *
+	   from tb_staff
+	   where staff_no = #{staffNo}
+	  
+	</select>
+	
+	<!-- 정보수정 -->
+	<update id="updateStaff" parameterType="Staff">
+		update tb_staff
+		 set staff_name = #{staffName},
+		 	staff_rank = #{staffRank},
+		 	staff_email = #{staffEmail},
+		 	staff_ph = #{staffPh}
+		 where staff_no = #{staffNo}	
+	</update>
+	
+	<!--사원삭제 -->
+	<delete id="deleteStaff" parameterType="int">
+		delete
+		 from tb_staff
+		 where staff_no = #{staffNo}
+	</delete>
+
+	
+	<!--사원전체검색 -->
+	<select id="selectStaff" resultType="Staff">
+		select *
+		from tb_staff
+	</select>
+	
+	<!--사원검색 -->
+	<select id="staffSearch" parameterType="Staff" resultType="Staff">
+		select staff_no, staff_name, staff_rank, staff_email, staff_ph
+		  from tb_staff
+		<where>
+			<if test="staffNo != 0 and staffNo != null">
+				and staff_no = #{staffNo}
+			</if>
+			<if test="staffName != null">
+				and staff_name like CONCAT('%',#{staffName},'%')
+			</if>
+			<if test="staffRank != null">
+				and staff_rank like CONCAT('%',#{staffRank},'%')
+			</if>
+			<if test="staffEmail != null">
+				and staff_email like CONCAT('%',#{staffEmail},'%')
+			</if>
+			<if test="staffPh != null">
+				and staff_ph like CONCAT('%',#{staffPh},'%')
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

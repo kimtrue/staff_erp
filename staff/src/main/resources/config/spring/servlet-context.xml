@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc 
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 빈 객체 자동 등록하기 -->
+	<context:component-scan
+		base-package="kr.co.staff" />
+
+	<!-- mvc 관련객체 등록작업 진행 : @RequestMapping등의 어노테이션 처리 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+
+	<!-- WEB의 정적파일 -->
+	<mvc:default-servlet-handler />
+
+
+	<!-- jsp 페이지로 이동 시 참고 -->
+	<mvc:view-resolvers>
+		<!-- http://localhost:8000/spring/index.html 폴더구조 webapp > index.html WEB-INF는 
+			직접 호출 불가능 ( localhost/spring/WEB-INF <- 접근 불가) -->
+		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+
+</beans>

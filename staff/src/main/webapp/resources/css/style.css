@@ -1,0 +1,59 @@
+#all {
+    border: 2px solid black;
+    width: 1040px;
+    height: 600px;
+    overflow: auto;
+    margin: 0 auto;
+}
+
+.updateall{
+	border: 2px solid black;
+    width: 1040px;
+    height: 300px;
+    margin: 0 auto;
+    
+	
+}
+
+table {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 1000px;
+    border-collapse : collapse;
+    
+}
+table, tr, td, th{
+    border: 1px solid black;
+}
+td, th {
+    padding: 5px;
+}
+.label, th {
+    background-color: #bcbcbc;
+    text-align: center;
+}
+#bbt {
+    margin-top: 10px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.center {
+    text-align: center;
+}
+#search {
+    width: 150px;
+}
+#submitt {
+
+  margin-top: 30px;
+  text-align: center;
+}
+#searchCnt{
+    text-align: right;
+    margin-right: 175px;
+    margin-top: 10px;
+}
+#gDate {
+    padding-left: 33px;
+}
