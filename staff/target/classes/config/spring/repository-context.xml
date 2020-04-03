@@ -42,20 +42,9 @@
 		<property name="basePackage" value="kr.co.staff.repository.dao" />
 	</bean>
 
-	<!-- naver mail -->
-	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
-		p:host="smtp.naver.com" p:port="587" p:username="kim_truee" p:password="j13521350">
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
-				<prop key="mail.smtps.ssl.trust">*</prop>
-				<prop key="mail.debug">true</prop>
-				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
-			</props>
-		</property>
-	</bean>
+
+	
+
 
 	<!-- 트占쏙옙占쏙옙占� 처占쏙옙 -->
 	<bean id="transactionManager"
