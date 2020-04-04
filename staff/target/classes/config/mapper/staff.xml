@@ -66,10 +66,27 @@
 		LIMIT #{startList}, #{listSize}
 	</select>
 	
-	<!-- 전체 사원 페이징을 위한 값 -->
-	<select id="staffCnt" resultType="int">
+	<!-- 페이징을 위한 값 -->
+	<select id="staffCnt" parameterType="Staff" resultType="int">
 		select count(*)
 	      from tb_staff
+	     <where>
+			<if test="staffNo != 0 and staffNo != null">
+				and staff_no = #{staffNo}
+			</if>
+			<if test="staffName != null">
+				and staff_name like CONCAT('%',#{staffName},'%')
+			</if>
+			<if test="staffRank != null">
+				and staff_rank like CONCAT('%',#{staffRank},'%')
+			</if>
+			<if test="staffEmail != null">
+				and staff_email like CONCAT('%',#{staffEmail},'%')
+			</if>
+			<if test="staffPh != null">
+				and staff_ph like CONCAT('%',#{staffPh},'%')
+			</if>
+		</where> 
 	</select>
 
 

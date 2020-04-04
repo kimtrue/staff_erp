@@ -67,13 +67,28 @@
 		</div>
 
 		<div id="result"></div>
+		
+		
+		<div id="keyword">
+			<form id="searchStaff" method="post">
+				<input name="sno" type="hidden" value="${pagination.staffNo}" />
+				<input name="srank" type="hidden" value="${pagination.staffRank}" />
+				<input name="semail" type="hidden" value="${pagination.staffEmail}" />
+				<input name="sname" type="hidden" value="${pagination.staffName}" />
+				<input name="sph" type="hidden" value="${pagination.staffPh}" />
+			</form>
+		</div>
+		<!-- 검색결과 저장 -->
+
+		
+		
 		<!-- 페이징 -->
 		<div id="paginationBox"></div>
+		
 
 
 
 	</div>
-
 
 	<script src="<c:url value='/resources/js/board.js' />"></script>
 	<script type="text/javascript">

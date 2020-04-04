@@ -50,9 +50,10 @@ public class MainController {
 	@RequestMapping("/stafflist.do")
 	@ResponseBody
 	public Map<String, Object> staffList(Staff staff) {
-		staff.setListCnt(service.getStaffCnt());
+		staff.setListCnt(service.getStaffCnt(staff));
 		Map<String, Object> map= new HashMap<>();
 		staff.pageInfo(staff.getPage(), staff.getRange(), staff.getListCnt());
+		System.out.println("페이지"+ staff);
 		map.put("stafflist", service.staffList(staff));
 		map.put("pagination", staff);
 		
@@ -63,7 +64,7 @@ public class MainController {
 	@RequestMapping("/deletestaff.do")
 	@ResponseBody
 	public List<Staff> deletestaff(Staff staff) {
-		staff.setListCnt(service.getStaffCnt());
+		staff.setListCnt(service.getStaffCnt(staff));
 		return service.deleteStaff(staff);
 	}
 	
@@ -71,9 +72,22 @@ public class MainController {
 	@RequestMapping("/staffsearch.do")
 	@ResponseBody
 	public Map<String, Object> staffSearch(Staff staff){
-		staff.setListCnt(service.getStaffCnt());
-		Map<String, Object> map= new HashMap<>();
+		staff.setListCnt(service.getStaffCnt(staff));
 		staff.pageInfo(staff.getPage(), staff.getRange(), staff.getListCnt());
+		//검색 데이터
+		if(staff.getStaffName() != null) {
+			staff.setStaffName(staff.getStaffName());
+		} 
+		if(staff.getStaffEmail() != null) {
+			staff.setStaffEmail(staff.getStaffEmail());
+		}
+		if(staff.getStaffPh() != null) {
+			staff.setStaffPh(staff.getStaffPh());
+		}
+			staff.setStaffNo(staff.getStaffNo());
+		
+			
+		Map<String, Object> map= new HashMap<>();
 		map.put("stafflist", service.staffSearch(staff));
 		map.put("pagination", staff);
 		return map;

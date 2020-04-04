@@ -49,9 +49,10 @@ public class StaffServiceImpl implements StaffService {
 		dao.deleteStaff(staff.getStaffNo());
 		return dao.staffSearch(staff);
 	}
+	//검색된 staff수
 	@Override
-	public int getStaffCnt() {
-		return dao.staffCnt();
+	public int getStaffCnt(Staff staff) {
+		return dao.staffCnt(staff);
 	}
 	
 	

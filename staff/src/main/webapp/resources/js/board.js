@@ -1,26 +1,65 @@
 //계속 사용할 staffNo
 let staffNo;
+let staffRank; 
+let staffPh;
+let staffEmail;
+let staffName;
 //페이지 다시 사용하기 위해
+staffRank = $('input[name="srank"]').val();
+staffName = $('input[name="sname"]').val();
+staffEmail = $('input[name="semail"]').val();
+staffPh = $('input[name="sph"]').val();
+staffNo = $('input[name="sno"]').val();
+
 
 
 /** 전체검색 Ajax */	
 	$("#allsearch").click(() => {
+		staffRank = $("select[name=staffRank]").val(); 
+		staffPh = $("input[name=staffPh]").val();
+		staffEmail = $("input[name=staffEmail]").val();
+		staffNo = $("input[name=staffNo]").val()*1;
+		staffName = $("input[name=staffName]").val();
+		page = $(".page-item.active a").attr("data-page");
 		$.ajax({
-			url: "stafflist.do",
+			url: "staffsearch.do",
+			type: "POST",
+			data: {
+				staffRank,
+				staffEmail, 
+				staffPh,
+				staffNo,
+				staffName,
+				page: 1,
+				range: 1
+			},
 			success: list => makeStaffList(list)
 		});
-	});
+		
+	})	
+	
+	
 		
 	
 //테이블 그리기
 	
-	function makeStaffList(list) {
+function makeStaffList(list) {
 		let pagination = list.pagination;
-		console.log("페이지다",pagination);
+		$('input[name="srank"]').val(pagination.staffRank);
+		$('input[name="sname"]').val(pagination.staffName);
+		$('input[name="sno"]').val(pagination.staffNo);
+		$('input[name="semail"]').val(pagination.staffEmail);
+		$('input[name="sph"]').val(pagination.staffPh);
+
+		
+		
+		
 		let staffList = list.stafflist;
+		let searchStaff = list.searchStaff;
+		
 		$tbl = $("<table></table>");
-		$tbl.append(`
-					<colgroup>
+		$tbl.append(`	
+					<colgroup>	
                         <col style="width:6%;">
                         <col style="width:6%;">
                         <col style="width:11%;">
@@ -44,20 +83,19 @@ let staffNo;
                    	
                     
                     `);
-		$("#searchCnt>a").html(`${staffList.length}건`);
-		
+		$("#searchCnt>a").html(`${pagination.listCnt}건`);
 
-		
-		$.each(staffList, (i, c) => {
-			if(c === null) {
-				$tbl.append(
-						`
-						<tr>
+		if(staffList.length === 0) {
+			$tbl.append(
+					`
+					<tr>
 						<td colspan="6"> 정보가 없습니다 </td>
-						</tr>
-						`);
-			}
-			else {
+					</tr>
+					`);
+		} else {
+		$.each(staffList, (i, c) => {
+			console.log("우쉬", c)
+		
 				if(c.staffNo > 0 && c.staffNo < 10){
 					c.staffNo = '00'+c.staffNo
 				} else if (c.staffNo >= 10 && c.staffNo < 100) {
@@ -66,18 +104,18 @@ let staffNo;
 				$tbl.append(
 						`
 						<tr> 
-						<td><input type="checkbox" value=${c.staffNo}/></td>
-						<td>${c.staffNo}</td>
-						<td>${c.staffName}</td> 
-						<td>${c.staffRank}</td> 
-						<td>${c.staffEmail}</td>
-						<td>${c.staffPh}</td>
+							<td><input type="checkbox" value=${c.staffNo}/></td>
+							<td>${c.staffNo}</td>
+							<td>${c.staffName}</td> 
+							<td>${c.staffRank}</td> 
+							<td>${c.staffEmail}</td>
+							<td>${c.staffPh}</td>
 						</tr>
+						
 						`
 				);
-			}
-				
-		});
+			});
+		}
 		$("#result").html($tbl);
 		
 		//페이징
@@ -88,7 +126,7 @@ let staffNo;
 		if (pagination.prev === 'true') {
 			pageEle += `
 			<li class="page-item">
-				<a class="page-link" href="#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')"> Previous</a>
+				<a class="page-link" href="#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize})"> Previous</a>
 			</li>
 			`
 		}
@@ -165,12 +203,12 @@ let staffNo;
 	
 //검색
 	$("#search").click(() => {
-		let staffRank = $("select[name=staffRank]").val(); 
-		let staffPh = $("input[name=staffPh]").val();
-		let staffEmail = $("input[name=staffEmail]").val();
-		let staffNo = $("input[name=staffNo]").val()*1;
-		let staffName = $("input[name=staffName]").val();
-		console.log(typeof(staffNo));
+		staffRank = $("select[name=staffRank]").val(); 
+		staffPh = $("input[name=staffPh]").val();
+		staffEmail = $("input[name=staffEmail]").val();
+		staffNo = $("input[name=staffNo]").val()*1;
+		staffName = $("input[name=staffName]").val();
+		page = $(".page-item.active a").attr("data-page");
 		$.ajax({
 			url: "staffsearch.do",
 			type: "POST",
@@ -179,10 +217,77 @@ let staffNo;
 				staffEmail, 
 				staffPh,
 				staffNo,
-				staffName
+				staffName,
+				page: 1,
+				range: 1
 			},
 			success: list => makeStaffList(list)
 		});
 		
 	})
+	
+// 페이징
+
+// 이전 버튼 이벤트
+function fn_prev(page, range, rangeSize) {
+	var page = ((range - 2) * rangeSize) + 1;
+	var range = range - 1;
+	
+	$.ajax({
+		url: "staffsearch.do",
+		type: "POST",
+		data: {
+			staffRank,
+			staffEmail, 
+			staffPh,
+			staffNo,
+			staffName,
+			page,
+			range
+			},
+		success: list => makeStaffList(list)
+	});
+	
+
+}
+
+// 페이지 번호 클릭
+function fn_pagination(page, range, rangeSize) {
+
+	$.ajax({
+		url: "staffsearch.do",
+		type: "POST",
+		data: {
+			staffRank,
+			staffEmail, 
+			staffPh,
+			staffNo,
+			staffName,
+			page,
+			range
+			},
+		success: list => makeStaffList(list)
+	});
+}
+
+// 다음 버튼 이벤트
+function fn_next(page, range, rangeSize) {
+	var page = parseInt((range * rangeSize)) + 1;
+	var range = parseInt(range) + 1;
+	$.ajax({
+		url: "staffsearch.do",
+		type: "POST",
+		data: {
+			staffRank,
+			staffEmail, 
+			staffPh,
+			staffNo,
+			staffName,
+			page,
+			range
+			},
+		success: list => makeStaffList(list)
+	});
+}
+
 

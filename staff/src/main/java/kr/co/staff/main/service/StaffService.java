@@ -9,7 +9,7 @@ public interface StaffService {
 	//사원전체조회
 	public List<Staff> staffList(Staff staff);
 	//리뷰 페이징 처리를 위한
-	public int getStaffCnt();
+	public int getStaffCnt(Staff staff);
 	
 	//사원 수정폼 정보
 	public Staff staffupdateForm(int staffNo);

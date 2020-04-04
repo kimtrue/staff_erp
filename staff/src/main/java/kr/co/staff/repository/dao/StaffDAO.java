@@ -8,7 +8,7 @@ public interface StaffDAO {
 	//전체사원 조회
 	List<Staff> selectStaff(Staff staff);
 	//전체사원 조회 페이징을 위한 
-	int staffCnt();
+	int staffCnt(Staff staff);
 	
 	
 	//사원등록
