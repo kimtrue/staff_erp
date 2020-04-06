@@ -69,7 +69,8 @@ function makeStaffList(list) {
                            
                     </colgroup>
                     <tr id="borderhidden">
-						<td colspan="6"> <a onclick="updateform();">수정</a> / <a onclick="deleteStaff();">삭제</a> </td>
+						<td colspan="5"> <a onclick="updateform();">수정</a> / <a onclick="deleteStaff();">삭제</a> </td>
+						<td><a onclick="mailform();">메일보내기</a></td>
                     </tr>
                     <tr>
 						<th scope="col"></th>
@@ -225,6 +226,11 @@ function makeStaffList(list) {
 		});
 		
 	})
+	
+function mailform() {
+		location.href='/staff/mail/mailform.do';
+	}	
+	
 	
 // 페이징
 
