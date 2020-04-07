@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
@@ -20,8 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import kr.co.staff.main.service.StaffService;
 import kr.co.staff.repository.vo.Mail;
@@ -52,6 +60,7 @@ public class MailController {
 		String fname="";
 		// 파일이 저장될 실제 경로명
 		String local = req.getSession().getServletContext().getRealPath("/");
+		
 	// 실제경로명 + 파일생성경로			
 	File file = new File(local + path);
 	// 경로명가 없으면 경로생성
@@ -65,8 +74,8 @@ public class MailController {
 		
 	// 사용자가 보내준 request의 정보를 파싱 처리하는 클래스(cos.jar에서 MultipartRequest의 역할) 
 	ServletFileUpload upload = new ServletFileUpload(disk);
-	
-	
+			
+	List<String> list = new ArrayList<>();
 	try {
 		List<FileItem> lists = upload.parseRequest(req);
 	
@@ -83,9 +92,6 @@ public class MailController {
 				String name = item.getName();
 				long size = item.getSize();
 				String contentType = item.getContentType();
-//				System.out.println("파일명 : " + name);
-//				System.out.println("파일크기 : " + size);
-//				System.out.println("파일타입 : " + contentType);
 				
 				// 실제 저정하는 파일의 이름(직접 - UUID 활용)
 				String ext = "";
@@ -95,41 +101,38 @@ public class MailController {
 				item.write(f);
 				// UUID 경로명 저장
 				fname = f.getName();
-	
+				String spath = printtest(item);
+				list.add(spath);
 			}
 			
 		}
 
 		// 프로젝트경로명 + 파일생성경로 + UUID이름
 		String uploadPath = req.getContextPath() + path+"/" + fname;
-//		System.out.println(uploadPath);
+		String up = uploadPath +"^"+ list;
+		System.out.println("업로드"+up);
 		// 이미지타입으로 전달
 		res.setContentType("image/pjpeg");
 		PrintWriter pw = res.getWriter();
-		pw.write(uploadPath);
+		pw.write(up);
 		pw.flush();
 		pw.close();
 		
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	
-
-	
 	}
 	
 	
-	@ResponseBody
 	@RequestMapping("/sendmail.do")
-//	public String mailSending( Mail mail) {
+	@ResponseBody
 	public String mailSending(HttpServletRequest req, Mail mail) {
 		String setfrom = "kjs3597@gmail.com";
 		String tomail = mail.getMailTo();
 		String title = mail.getMailSubject();// 제목
 		String content = mail.getEditordata();// 내용
 		
-
-
+        /*
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -138,6 +141,7 @@ public class MailController {
 			messageHelper.setTo(tomail); // 받는사람 이메일
 			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
 			messageHelper.setText(content, true); // 메일 내용
+         */
 
 			/*
 			StringBuffer org = new StringBuffer(content);
@@ -145,17 +149,64 @@ public class MailController {
 			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
 			
 			String contents = pat.toString(); 
-			*/
 
 
 			mailSender.send(message);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+			 */
 		
 
-		return "truestaff/front/main.do";
+		return "redirect:front/main.do";
 	}
+	
+	public String printtest(FileItem file) {
+		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/HH");
+		String ipath = "c:/sumnote" + sdf.format(new Date());
+		String fname="";
+		
+		File f = new File(ipath);
+		if (!f.exists()) {
+    		f.mkdirs();
+    	}
+		if (file.isFormField()) { // 타입이 파일 아닌 경우 true
+			// input 속성에 입력한 값을 반환
+//			System.out.println(item.getString());
+			
+		} else { // 타입이 파일인 경우
+			// 원본파일명, 파일의 크기
+			String name = file.getName();
+			long size = file.getSize();
+			String contentType = file.getContentType();
+			
+			// 실제 저정하는 파일의 이름(직접 - UUID 활용)
+			String ext = "";
+			int index = name.lastIndexOf(".");
+			if (index != -1) ext = name.substring(index);
+			File imgf = new File(f, UUID.randomUUID().toString() + ext);
+			try {
+				file.write(imgf);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// UUID 경로명 저장
+			fname = imgf.getName();
+			System.out.println("fname"+ fname);
+
+		}
+		// 프로젝트경로명 + 파일생성경로 + UUID이름
+		String uploadPath = ipath+"/" + fname;
+		System.out.println("경로는?" + uploadPath);
+		
+		return uploadPath;
+		
+		
+	}
+
+		
+
 	
 
 }

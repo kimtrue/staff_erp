@@ -85,11 +85,20 @@ function sendFile(file, el) {
       enctype: 'multipart/form-data',
       processData: false,
       success: function(url) {
-//       	alert(url);	 
-      	$(el).summernote('editor.insertImage', url);
+			console.log("가져와", url)
+			let aurl = url;
+			let arrUrl = aurl.split("^");
+      		$(el).summernote('editor.insertImage', arrUrl[0]);
+      		
+      		let sArr = arrUrl[1].split("[");
+      		let savepath = sArr[1].split("]");
+      		console.log("과연,,", savepath[0]);
+      		
       }
     });
   }
+  
+  
   
  
   
