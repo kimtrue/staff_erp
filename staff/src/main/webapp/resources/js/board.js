@@ -95,8 +95,6 @@ function makeStaffList(list) {
 					`);
 		} else {
 		$.each(staffList, (i, c) => {
-			console.log("우쉬", c)
-		
 				if(c.staffNo > 0 && c.staffNo < 10){
 					c.staffNo = '00'+c.staffNo
 				} else if (c.staffNo >= 10 && c.staffNo < 100) {
@@ -228,7 +226,7 @@ function makeStaffList(list) {
 	})
 	
 function mailform() {
-		location.href='/staff/mail/mailform.do';
+		location.href='/truestaff/mail/mailform.do';
 	}	
 	
 	

@@ -31,7 +31,13 @@
 
 	<!-- WEB의 정적파일 -->
 	<mvc:default-servlet-handler />
-
+	
+	<!-- fileUpload 
+	<bean id="multipartResolver" 
+			class= "org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+	<!-- 최대 업로드 파일 사이즈 : 10MB 
+	<property name="maxUploadSize" value="10485760" /> 
+	</bean>--> 
 
 	<!-- jsp 페이지로 이동 시 참고 -->
 	<mvc:view-resolvers>
@@ -39,6 +45,22 @@
 			직접 호출 불가능 ( localhost/spring/WEB-INF <- 접근 불가) -->
 		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
 	</mvc:view-resolvers>
+	
+	<!-- mailsend -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="kjs3597@gmail.com" />
+		<property name="password" value="uelxhwakwfaiiatx" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 
 
 </beans>

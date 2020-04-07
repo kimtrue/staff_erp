@@ -17,15 +17,15 @@
 <body> 
 			<h2>메일 폼</h2>
 	<div id="all">
-		<form name="sendmail" method="post" action="sendmail.do" onsubmit="return infoCheck();">
-		<table>
+	<form name="sendmail" method="post" action="sendmail.do">
+	<table>
 		 <tr> 
 		 	<td>받는 사람</td>
-		 	<td><input type="text" /></td>
+		 	<td><input type="text" name="mailTo"/></td>
 		 </tr>
 		 <tr> 
 		 	<td>제목</td>
-		 	<td><input type="text" /></td>
+		 	<td><input type="text" name="mailSubject"/></td>
 		 </tr>
 		 <tr> 
 		 	<td>파일 첨부</td>
@@ -41,12 +41,12 @@
 			
 		</table>
 
-		</form>
 		<div id="submitt">
 			<button id="sbutton">보내기</button>
-			<button type="button" id="cancel" onclick="location.href='/kr.co.staff/front/main.do'">취소</button>
+			<button type="button" id="cancel" onclick="location.href='/truestaff/front/main.do'">취소</button>
 		</div>
 
+		</form>
 
 	</div>
 
@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 
 function sendFile(file, el) {
-	  var contextPath = "${pageContext.request.contextPath}";
+	var contextPath = "${pageContext.request.contextPath}";
     var form_data = new FormData();
     form_data.append('file', file);
     $.ajax({
@@ -85,11 +85,14 @@ function sendFile(file, el) {
       enctype: 'multipart/form-data',
       processData: false,
       success: function(url) {
-      	alert(url);	 
+//       	alert(url);	 
       	$(el).summernote('editor.insertImage', url);
       }
     });
   }
+  
+ 
+  
 </script>
 
 </body>

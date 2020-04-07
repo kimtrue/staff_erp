@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,17 +17,23 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.staff.main.service.StaffService;
+import kr.co.staff.repository.vo.Mail;
 
 @Controller
 @RequestMapping("/mail")
 public class MailController {
 	@Autowired
 	private StaffService service;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@RequestMapping("/mailform.do")
 	public void sendMail() {}
@@ -109,6 +116,45 @@ public class MailController {
 	
 
 	
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/sendmail.do")
+//	public String mailSending( Mail mail) {
+	public String mailSending(HttpServletRequest req, Mail mail) {
+		String setfrom = "kjs3597@gmail.com";
+		String tomail = mail.getMailTo();
+		String title = mail.getMailSubject();// 제목
+		String content = mail.getEditordata();// 내용
+		
+
+
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content, true); // 메일 내용
+
+			/*
+			StringBuffer org = new StringBuffer(content);
+			StringBuffer oo = org.insert(content.indexOf("src")+4, "\\");
+			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
+			
+			String contents = pat.toString(); 
+			*/
+
+
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+
+		return "truestaff/front/main.do";
 	}
 	
 

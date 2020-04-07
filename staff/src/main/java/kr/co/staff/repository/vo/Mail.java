@@ -21,6 +21,8 @@ public class Mail {
     private String contentType;
     
     private Date mailSendDate;
+    
+    private String editordata;
  
     public Mail() {
         contentType = "text/plain";
