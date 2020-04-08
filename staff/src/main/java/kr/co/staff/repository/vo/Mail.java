@@ -23,6 +23,10 @@ public class Mail {
     private Date mailSendDate;
     
     private String editordata;
+    
+    private String savePath;
+    
+    private String fileName;
  
     public Mail() {
         contentType = "text/plain";

@@ -17,7 +17,7 @@
 <body> 
 			<h2>메일 폼</h2>
 	<div id="all">
-	<form name="sendmail" method="post" action="sendmail.do">
+	<form name="sendmail" method="post" action="sendmail.do" onsubmit="return infoCheck();">
 	<table>
 		 <tr> 
 		 	<td>받는 사람</td>
@@ -40,6 +40,8 @@
 		 	
 			
 		</table>
+		<input type="hidden" name="savePath" />
+		<input type="hidden" name="fileName" />
 
 		<div id="submitt">
 			<button id="sbutton">보내기</button>
@@ -52,6 +54,8 @@
 
 <script src="<c:url value='/resources/js/board.js' />"></script>	
 <script type="text/javascript">
+let savepath;
+
 $(document).ready(function() {  
     $('#summernote').summernote({
       height: 400,
@@ -85,19 +89,30 @@ function sendFile(file, el) {
       enctype: 'multipart/form-data',
       processData: false,
       success: function(url) {
-			console.log("가져와", url)
+// 			console.log("가져와", url)
 			let aurl = url;
 			let arrUrl = aurl.split("^");
       		$(el).summernote('editor.insertImage', arrUrl[0]);
       		
       		let sArr = arrUrl[1].split("[");
-      		let savepath = sArr[1].split("]");
-      		console.log("과연,,", savepath[0]);
+      		let save = sArr[1].split("]");
+//       		console.log("과연,,", save[0]);
+      		savepath = save[0];
       		
       }
     });
   }
-  
+
+function infoCheck(){
+	let num = savepath.lastIndexOf("/");
+	let sname = savepath.substring(num+1);
+	
+// 	$("img").attr("src", savepath);
+	$('input[name="savePath"]').val(savepath);
+	$('input[name="fileName"]').val(sname);
+	
+	
+}
   
   
  

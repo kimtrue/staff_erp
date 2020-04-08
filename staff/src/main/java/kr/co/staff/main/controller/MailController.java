@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -131,35 +132,55 @@ public class MailController {
 		String tomail = mail.getMailTo();
 		String title = mail.getMailSubject();// 제목
 		String content = mail.getEditordata();// 내용
+		String fileName = mail.getFileName();
 		
-        /*
+		
+      
 		try {
+			
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
 			messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
 			messageHelper.setTo(tomail); // 받는사람 이메일
 			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-			messageHelper.setText(content, true); // 메일 내용
-         */
-
-			/*
-			StringBuffer org = new StringBuffer(content);
-			StringBuffer oo = org.insert(content.indexOf("src")+4, "\\");
-			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
 			
-			String contents = pat.toString(); 
+			int numb = content.indexOf("src=");
+			String sname = content.substring(numb+4);
+			int la = sname.indexOf("style");
+			String save = sname.substring(0, la);
+			
+			System.out.println(":::content:::"+content);
+			System.out.println(":::save:::"+save);
+			
+			String rename = "\"cid:"+fileName+"\" ";
+			
+			String saveContent = content.replace(save, rename);
+			
+//			System.out.println("::::"+saveContent);
 
+//			StringBuffer org = new StringBuffer(content);
+//			StringBuffer oo = org.insert(content.indexOf("src")+3, "\\");
+//			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
+//		    StringBuffer simage = pat.
+//			String contents = pat.toString(); 
+			
+			
+			messageHelper.setText(saveContent, true); // 메일 내용
+			FileSystemResource file = new FileSystemResource(new File(mail.getSavePath()));
+			messageHelper.addInline(fileName, file);
+			
 
 			mailSender.send(message);
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-			 */
-		
 
-		return "redirect:front/main.do";
+		return "redirect:main.do";
 	}
+	
+	
 	
 	public String printtest(FileItem file) {
 		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/HH");
