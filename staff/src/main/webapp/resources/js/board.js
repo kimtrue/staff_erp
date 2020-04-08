@@ -69,8 +69,13 @@ function makeStaffList(list) {
                            
                     </colgroup>
                     <tr id="borderhidden">
-						<td colspan="5"> <a onclick="updateform();">수정</a> / <a onclick="deleteStaff();">삭제</a> </td>
+						<td colspan="4"> <a onclick="updateform();">수정</a> / <a onclick="deleteStaff();">삭제</a> </td>
 						<td><a onclick="mailform();">메일보내기</a></td>
+						<td>
+							  <form id="excelForm" name="excelForm" method="post" action="staffexceldown.do" onsubmit="return infoCheck();">
+									<input type="submit" value="엑셀" />
+								</form>
+						</td>
                     </tr>
                     <tr>
 						<th scope="col"></th>
@@ -292,6 +297,15 @@ function fn_next(page, range, rangeSize) {
 			},
 		success: list => makeStaffList(list)
 	});
+}
+
+//엑셀 다운로드
+function infoCheck(){
+	staffRank,
+	staffEmail, 
+	staffPh,
+	staffNo,
+	staffName
 }
 
 

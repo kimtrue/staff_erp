@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,11 +89,33 @@ public class MainController {
 		}
 			staff.setStaffNo(staff.getStaffNo());
 		
-			
+
+		
 		Map<String, Object> map= new HashMap<>();
 		map.put("stafflist", service.staffSearch(staff));
 		map.put("pagination", staff);
 		return map;
+	}
+	
+	//엑셀다운로드
+	@RequestMapping("/staffexceldown.do")
+	public String excelDown(Map<String, Object> map, HttpServletRequest req, HttpServletResponse res, Staff staff) {
+		 res.setCharacterEncoding("UTF-8");
+         res.setContentType("application/vnd.ms-excel");
+         res.setHeader("Pragma","public");
+         res.setHeader("Expires","0");
+         res.setHeader("Content-Disposition","attachment; filename = test.xls");
+
+         List<Staff> excelList = service.staffSearch(staff);
+         
+//         System.out.println("엑셀스태프:" + excelList );
+
+         map.put("excelList", excelList);
+//         map.put("excelType",staff);
+
+         return "excelView";
+		
+		
 	}
 
 }

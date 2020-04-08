@@ -45,6 +45,28 @@
 			직접 호출 불가능 ( localhost/spring/WEB-INF <- 접근 불가) -->
 		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
 	</mvc:view-resolvers>
+	
+	<bean
+	class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<property name="order" value="1" />
+</bean>
+
+
+	<!--컨트롤러 리턴시 다른것들보다 먼저 읽혀야 하기 때문에 order를 0과 1로 지정 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="order" value="0" />
+		<property name="defaultErrorView" value="error" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="RuntimeException">
+					error
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean name="excelView" class="kr.co.staff.main.service.ExcelView" />
 
 
 

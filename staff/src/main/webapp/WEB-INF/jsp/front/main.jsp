@@ -65,8 +65,8 @@
 			검색건수 ------><a>0건</a>
 
 		</div>
-
-		<div id="result"></div>
+		
+			<div id="result"></div>
 		
 		
 		<div id="keyword">
