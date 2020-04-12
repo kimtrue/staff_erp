@@ -99,19 +99,24 @@ public class MainController {
 	
 	//엑셀다운로드
 	@RequestMapping("/staffexceldown.do")
-	public String excelDown(Map<String, Object> map, HttpServletRequest req, HttpServletResponse res, Staff staff) {
+	public String excelDown(Map<String, Object> map, HttpServletRequest req, HttpServletResponse res) {
 		 res.setCharacterEncoding("UTF-8");
          res.setContentType("application/vnd.ms-excel");
          res.setHeader("Pragma","public");
          res.setHeader("Expires","0");
          res.setHeader("Content-Disposition","attachment; filename = test.xls");
+         
+         Staff staff = new Staff();
+         staff.setStaffEmail(req.getParameter("eemail"));
+         staff.setStaffName(req.getParameter("ename"));
+         staff.setStaffNo(Integer.parseInt(req.getParameter("eno")));
+         staff.setStaffPh(req.getParameter("eph"));
+         staff.setStaffRank(req.getParameter("erank"));
+        
 
          List<Staff> excelList = service.staffSearch(staff);
-         
-//         System.out.println("엑셀스태프:" + excelList );
 
          map.put("excelList", excelList);
-//         map.put("excelType",staff);
 
          return "excelView";
 		
