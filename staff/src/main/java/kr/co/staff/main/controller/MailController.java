@@ -128,7 +128,7 @@ public class MailController {
 	@RequestMapping("/sendmail.do")
 	@ResponseBody
 	public String mailSending(HttpServletRequest req, Mail mail) {
-		String setfrom = "";
+		String setfrom = "kjs3597@gmail.com";
 		String tomail = mail.getMailTo();
 		String title = mail.getMailSubject();// 제목
 		String content = mail.getEditordata();// 내용

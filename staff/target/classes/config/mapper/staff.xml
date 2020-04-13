@@ -88,6 +88,14 @@
 			</if>
 		</where> 
 	</select>
+	
+	
+	<!-- 시큐리티 로그인 -->
+	<select id="selectMember" parameterType="Member" resultType="Member">
+		select *
+		  from tb_staff
+		 where staff_email = #{staffEmail} 
+	</select>
 
 
 </mapper>
