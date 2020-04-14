@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 <!DOCTYPE html>
@@ -15,7 +15,20 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-<body>
+<sec:authorize access="isAnonymous()">
+ 	<a href="<c:url value="/login/loginForm.do" />">로그인</a>
+ 	<a href="<c:url value="staffregist.do" />">회원가입</a>
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+	<div>principal: <sec:authentication property="principal"/></div>
+	<div>
+	<sec:authentication property="principal.member" var="m"/> 
+	 	<div>${m}</div>
+	 	<div>${m.staffEmail}</div>
+	</div>
+
+
+
 	<div id="all">
 		<table>
 			<tbody>
@@ -68,7 +81,6 @@
 		
 			<div id="result"></div>
 		
-		
 		<div id="keyword">
 			<form id="searchStaff" method="post">
 				<input name="sno" type="hidden" value="${pagination.staffNo}" />
@@ -78,7 +90,8 @@
 				<input name="sph" type="hidden" value="${pagination.staffPh}" />
 			</form>
 		</div>
-		<!-- 검색결과 저장 -->
+		<!-- 
+		검색결과 저장 -->
 
 		
 		
@@ -89,7 +102,7 @@
 
 
 	</div>
-
+</sec:authorize>
 	<script src="<c:url value='/resources/js/board.js' />"></script>
 	<script type="text/javascript">
 	$("#regist").click(() => {

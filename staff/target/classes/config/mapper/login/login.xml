@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.staff.login.dao.MemberDAO">
+<resultMap type="member" id="memberMap">
+		<id column="staff_email" property="staffEmail" />
+		<result column="staff_email" property="staffEmail" />
+		<result column="staff_no" property="staffNo" />
+		<result column="password" property="password" />
+		<result column="staff_name" property="staffName" />
+		<result column="staff_ph" property="staffPh" />
+		<collection property="authList" resultMap="authMap" />
+	</resultMap>
+
+	<resultMap type="auth" id="authMap">
+		<result column="staff_email" property="staffEmail" />
+		<result column="auth" property="auth" />
+	</resultMap>
+
+	
+	<select id="selectMember" parameterType="string" resultMap="memberMap">
+		SELECT m.staff_email, m.password, m.staff_name, a.auth, m.staff_rank, m.staff_no
+		  FROM tb_staff m LEFT OUTER JOIN tb_auth a 
+		    on m.staff_email = a.staff_email
+		 WHERE m.staff_email = #{staffEmail}
+	</select>
+	
+	<insert id="insertMemberAuth" parameterType="auth">
+	    insert into tb_auth(staff_email, auth) values(#{staffEmail}, #{auth})
+	</insert>
+
+
+</mapper>
