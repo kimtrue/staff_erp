@@ -152,10 +152,18 @@ public class MailController {
 			
 			System.out.println(":::content:::"+content);
 			System.out.println(":::save:::"+save);
-			//src=\"cid:이름.확장자" 형태가 되어야한다
+			
 			String rename = "\"cid:"+fileName+"\" ";
 			
 			String saveContent = content.replace(save, rename);
+			
+//			System.out.println("::::"+saveContent);
+
+//			StringBuffer org = new StringBuffer(content);
+//			StringBuffer oo = org.insert(content.indexOf("src")+3, "\\");
+//			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
+//		    StringBuffer simage = pat.
+//			String contents = pat.toString(); 
 			
 			
 			messageHelper.setText(saveContent, true); // 메일 내용
