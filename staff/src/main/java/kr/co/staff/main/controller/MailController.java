@@ -128,7 +128,7 @@ public class MailController {
 	@RequestMapping("/sendmail.do")
 	@ResponseBody
 	public String mailSending(HttpServletRequest req, Mail mail) {
-		String setfrom = "kjs3597@gmail.com";
+		String setfrom = "";
 		String tomail = mail.getMailTo();
 		String title = mail.getMailSubject();// 제목
 		String content = mail.getEditordata();// 내용
@@ -152,18 +152,10 @@ public class MailController {
 			
 			System.out.println(":::content:::"+content);
 			System.out.println(":::save:::"+save);
-			
+			//src=\"cid:이름.확장자" 형태가 되어야한다
 			String rename = "\"cid:"+fileName+"\" ";
 			
 			String saveContent = content.replace(save, rename);
-			
-//			System.out.println("::::"+saveContent);
-
-//			StringBuffer org = new StringBuffer(content);
-//			StringBuffer oo = org.insert(content.indexOf("src")+3, "\\");
-//			StringBuffer pat = oo.insert(content.indexOf("src")+6, "cid:"); 
-//		    StringBuffer simage = pat.
-//			String contents = pat.toString(); 
 			
 			
 			messageHelper.setText(saveContent, true); // 메일 내용

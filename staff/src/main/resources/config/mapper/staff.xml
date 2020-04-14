@@ -5,8 +5,8 @@
 
 	<!--사원 등록 -->
 	<insert id="staffRegist" parameterType="Staff">
-		INSERT INTO tb_staff (staff_name, staff_rank, staff_email, staff_ph, password) 
-				VALUES(#{staffName}, #{staffRank}, #{staffEmail}, #{staffPh}, #{password})
+		INSERT INTO tb_staff (staff_name, staff_rank, staff_email, staff_ph) 
+				VALUES(#{staffName}, #{staffRank}, #{staffEmail}, #{staffPh})
 	</insert>
 	
 	<!-- 기존 사원 정보 -->
@@ -87,14 +87,6 @@
 				and staff_ph like CONCAT('%',#{staffPh},'%')
 			</if>
 		</where> 
-	</select>
-	
-	
-	<!-- 시큐리티 로그인 -->
-	<select id="selectMember" parameterType="Member" resultType="Member">
-		select *
-		  from tb_staff
-		 where staff_email = #{staffEmail} 
 	</select>
 
 

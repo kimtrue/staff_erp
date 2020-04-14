@@ -52,13 +52,6 @@
 					</td>
 					
 				</tr>
-				<tr>
-					<td class="label">비밀번호</td>
-					<td>
-					<input type="password"  name="password">
-					</td>
-					
-				</tr>
 				
 			</tbody>
 		</table>
@@ -68,7 +61,7 @@
 	</form>
 		<div id="submitt">
 			<button id="sbutton">등록</button>
-			<button type="button" id="cancel" onclick="location.href='/kr.co.staff/front/main.do'">취소</button>
+			<button type="button" id="cancel" onclick="location.href='/truestaff/front/main.do'">취소</button>
 		</div>
 
 

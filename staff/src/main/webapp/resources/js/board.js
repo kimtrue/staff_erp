@@ -72,8 +72,13 @@ function makeStaffList(list) {
 						<td colspan="4"> <a onclick="updateform();">수정</a> / <a onclick="deleteStaff();">삭제</a> </td>
 						<td><a onclick="mailform();">메일보내기</a></td>
 						<td>
-							  <form id="excelForm" name="excelForm" method="post" action="staffexceldown.do" onsubmit="return infoCheck();">
-									<input type="submit" value="엑셀" />
+							  <form id="excelForm" name="excelForm" method="post" action="staffexceldown.do">
+									<input type="submit" value="엑셀받기" />
+									<input name="eno" type="hidden" value="${pagination.staffNo}" />
+									<input name="erank" type="hidden" value="${pagination.staffRank}" />
+									<input name="eemail" type="hidden" value="${pagination.staffEmail}" />
+									<input name="ename" type="hidden" value="${pagination.staffName}" />
+									<input name="eph" type="hidden" value="${pagination.staffPh}" />
 								</form>
 						</td>
                     </tr>
@@ -300,12 +305,17 @@ function fn_next(page, range, rangeSize) {
 }
 
 //엑셀 다운로드
+/*
 function infoCheck(){
-	staffRank,
-	staffEmail, 
-	staffPh,
-	staffNo,
-	staffName
+	staffRank = $('input[name="srank"]').val();
+	staffName = $('input[name="sname"]').val();
+	staffEmail = $('input[name="semail"]').val();
+	staffPh = $('input[name="sph"]').val();
+	staffNo = $('input[name="sno"]').val();
+	
+	console.log(staffName);
+	
 }
+*/
 
 
