@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+						http://www.springframework.org/schema/security/spring-security.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- mybatis 시작 -->
+		<context:property-placeholder
+		location="classpath:config/mybatis/db.properties" />
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close" p:driverClassName="${driver}" p:url="${url}"
+		p:username="staff" p:password="staff" />
+	                                                                                           
+<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage"
+			value="kr.co.staff.login.vo" />
+		<property name="mapperLocations"
+			value="classpath:config/mapper/login/*.xml" />
+		<property name="configLocation"
+			value="classpath:config/mybatis/sqlMapConfig.xml" />
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="kr.co.staff.login.dao" />
+	</bean>
+	<!-- mybatis 종료 -->
+	
+
+	
+	<bean id="bcryptPasswordEncoder" 
+		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	  
+	<security:http> 
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/login/all.do" access="permitAll" />
+		<security:intercept-url pattern="/front/main.do" access="hasRole('ROLE_U')" />
+		<security:intercept-url pattern="/login/admin.do" access="hasRole('ROLE_S')" />
+		<security:form-login login-page="/login/lofinForm.do" username-parameter="staffEmail" password-parameter="password"
+		                     authentication-success-handler-ref="loginSuccessHandler" />
+		<security:logout logout-url="/login/logout.do" 
+						 logout-success-url="/login/lofinForm.do"
+		                 invalidate-session="true" 
+		                 delete-cookies="JSESSIONID" />
+	</security:http>					
+	<!-- 
+		가상으로 줬던, UserService 없애고,  security:authentication-provider 추가
+		우리가 만든 클래스 추가(mybais를 추가하기 위해)
+		로그인할 때 입력한 정보를 ref등록된 클래스에 넘긴다.
+	-->
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="myBatisUserDetailsService">
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
