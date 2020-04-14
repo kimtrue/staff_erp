@@ -17,6 +17,7 @@
   <div class="demo">
     <div class="login">
       <div class="login__check"></div>
+    <form method='post' action="<c:url value="/login" />">
       <div class="login__form">
         <div class="login__row">
           <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
@@ -30,9 +31,10 @@
           </svg>
           <input type="password" class="login__input pass" placeholder="Password" name="password"/>
         </div>
-        <button type="button" class="login__submit">Sign in</button>
+        <button type="submit" class="login__submit">Sign in</button>
 <!--         <p class="login__signup">Don't have an account? &nbsp;<a>Sign up</a></p> -->
       </div>
+      </form>
     </div>
   </div>
 </div>

@@ -16,9 +16,8 @@
 </head>
 <body>
 <sec:authorize access="isAnonymous()">
-	<script type="text/javascript">
-	alert("얌마");
-	</script>
+ 	<a href="<c:url value="/login/loginForm.do" />">로그인</a>
+ 	<a href="<c:url value="staffregist.do" />">회원가입</a>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 	<div>principal: <sec:authentication property="principal"/></div>

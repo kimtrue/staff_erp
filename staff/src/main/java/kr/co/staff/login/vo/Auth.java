@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Auth {
-  private String id;
+  private String staffEmail;
   private String auth;
 }

@@ -5,8 +5,8 @@
 
 	<!--사원 등록 -->
 	<insert id="staffRegist" parameterType="Staff">
-		INSERT INTO tb_staff (staff_name, staff_rank, staff_email, staff_ph) 
-				VALUES(#{staffName}, #{staffRank}, #{staffEmail}, #{staffPh})
+		INSERT INTO tb_staff (staff_name, staff_rank, staff_email, staff_ph, password) 
+				VALUES(#{staffName}, #{staffRank}, #{staffEmail}, #{staffPh}, #{password})
 	</insert>
 	
 	<!-- 기존 사원 정보 -->

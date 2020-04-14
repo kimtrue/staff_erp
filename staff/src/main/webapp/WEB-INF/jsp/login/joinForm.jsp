@@ -13,9 +13,9 @@
 </head>
 </head>
 <body> 
-<form name="sjform" id="sjform" method="post" action="staffregist.do" onsubmit="return infoCheck();">
 
 	<div class="registStaff">
+	<form name="sjform" id="sjform" method="post" action="join.do" onsubmit="return infoCheck();">
 		<table>
 			<tbody>
 				<tr>
@@ -53,7 +53,7 @@
 					
 				</tr>
 				<tr>
-					<td class="label">비밀번호</td>
+					<td class="label">비밀번호 입력</td>
 					<td>
 					<input type="password"  name="password">
 					</td>
@@ -65,11 +65,11 @@
 			<input type="hidden" name="staffEmail"/>
 			<input type="hidden" name="staffPh"/>
 
-	</form>
 		<div id="submitt">
 			<button id="sbutton">등록</button>
 			<button type="button" id="cancel" onclick="location.href='/truestaff/front/main.do'">취소</button>
 		</div>
+	</form>
 
 
 	</div>

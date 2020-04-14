@@ -13,23 +13,23 @@ public class LoginController {
 	@Autowired
 	private MemberServiceImpl service;
 	
-	/*
 	@RequestMapping("/join-form.do")
 	public String joinForm() {
-		return "security/joinForm";
+		return "login/joinForm";
 	}
 	
 	@RequestMapping("/join.do")
 	public String join(Member member) {
 		service.join(member);
-		return "redirect:/security/main.do";
+		return "redirect:/login/loginForm.do";
 	}
 	
-	 */
+	/*
 	@RequestMapping("/main.do")
 	public String main() {
 		return "redirect:/front/main.do";
 	}
+	 */
 	
 	@RequestMapping("/loginForm.do")
 	public void loginForm() {}

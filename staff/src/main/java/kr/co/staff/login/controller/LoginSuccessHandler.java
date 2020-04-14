@@ -25,6 +25,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			HttpServletRequest request, HttpServletResponse response, Authentication authentication) 
 					throws IOException, ServletException {
 		Collection<? extends GrantedAuthority> list = authentication.getAuthorities();
+		System.out.println("로그인핸들러"+ list);
 		for (GrantedAuthority auth : list) {
 			System.out.println(auth.getAuthority());
 		}

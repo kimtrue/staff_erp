@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.staff.login.dao.MemberDAO;
+import kr.co.staff.login.vo.Auth;
 import kr.co.staff.repository.dao.StaffDAO;
 import kr.co.staff.repository.vo.Staff;
 
@@ -15,7 +18,14 @@ public class StaffServiceImpl implements StaffService {
 
 	@Autowired
 	private StaffDAO dao;
-	//사원등록
+	@Autowired // spring-security.xml에서 관리되고 있는 클래스이다.
+	private PasswordEncoder encoder;
+	@Autowired
+	private MemberDAO mapper;
+	
+	
+	
+	
 	
 	//전체검색
 	@Override
@@ -25,7 +35,16 @@ public class StaffServiceImpl implements StaffService {
 	//등록
 	@Override
 	public void staffRegist(Staff staff) {
+		staff.setPassword(encoder.encode(staff.getPassword()));
+		System.out.println("서비스임플"+staff.getPassword());
+		
 		dao.staffRegist(staff);
+		Auth auth = new Auth();
+		auth.setStaffEmail((staff.getStaffEmail()));
+		auth.setAuth("ROLE_U");
+		
+		System.out.println("서비스임플"+auth);
+		mapper.insertMemberAuth(auth);
 	}
 
 	//수정폼

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import kr.co.staff.login.dao.MemberMapper;
+import kr.co.staff.login.dao.MemberDAO;
 import kr.co.staff.login.vo.Auth;
 import kr.co.staff.login.vo.Member;
 
@@ -12,7 +12,7 @@ import kr.co.staff.login.vo.Member;
 public class MemberServiceImpl {
 
 	@Autowired
-	private MemberMapper mapper;
+	private MemberDAO mapper;
 
 	@Autowired // spring-security.xml에서 관리되고 있는 클래스이다.
 	private PasswordEncoder encoder;
@@ -22,7 +22,7 @@ public class MemberServiceImpl {
 		member.setPassword(encoder.encode(member.getPassword()));
 		mapper.insertMember(member);
 		Auth auth = new Auth();
-		auth.setId(member.getStaffEmail());
+		auth.setStaffEmail((member.getStaffEmail()));
 		auth.setAuth("ROLE_U");
 		mapper.insertMemberAuth(auth);
 	} 

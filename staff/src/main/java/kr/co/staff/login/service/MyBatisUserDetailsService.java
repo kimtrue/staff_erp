@@ -14,8 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import kr.co.staff.login.dao.MemberMapper;
+import kr.co.staff.login.dao.MemberDAO;
 import kr.co.staff.login.vo.Auth;
 import kr.co.staff.login.vo.Member;
 import kr.co.staff.login.vo.SecurityUser;
@@ -24,11 +25,12 @@ import kr.co.staff.login.vo.SecurityUser;
 public class MyBatisUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private MemberMapper mapper;
+	private MemberDAO dao;
 	@Override // 
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		System.out.println("userName : " + userName);
-		Member vo = mapper.selectMember(userName); // 아이디를 가지고 유저정보 꺼낸다.
+	public UserDetails loadUserByUsername(String staffEmail) throws UsernameNotFoundException {
+		Member vo = dao.selectMember(staffEmail); // 아이디를 가지고 유저정보 꺼낸다.
+		System.out.println("MyBatisUserDetailsService"+vo);
+		
 		List<SimpleGrantedAuthority> list = new ArrayList<>();
 		//VO에는 SimpleGrantedAuthority타입이 없으므로 타입을 바꿔주는 과정
 		for (Auth auth : vo.getAuthList()) {

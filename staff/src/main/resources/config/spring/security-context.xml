@@ -44,11 +44,11 @@
 	<security:http> 
 		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/login/all.do" access="permitAll" />
-		<security:intercept-url pattern="/login/user.do" access="hasRole('ROLE_U')" />
+		<security:intercept-url pattern="/front/main.do" access="hasRole('ROLE_U')" />
 		<security:intercept-url pattern="/login/admin.do" access="hasRole('ROLE_S')" />
-		<security:form-login login-page="/login/lofinForm.do" username-parameter="staffEmail" 
+		<security:form-login login-page="/login/lofinForm.do" username-parameter="staffEmail" password-parameter="password"
 		                     authentication-success-handler-ref="loginSuccessHandler" />
-		<security:logout logout-url="/security/logout.do" 
+		<security:logout logout-url="/login/logout.do" 
 						 logout-success-url="/login/lofinForm.do"
 		                 invalidate-session="true" 
 		                 delete-cookies="JSESSIONID" />

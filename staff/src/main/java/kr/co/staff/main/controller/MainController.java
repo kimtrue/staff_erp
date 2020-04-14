@@ -32,6 +32,7 @@ public class MainController {
 	//사원등록
 	@RequestMapping("/staffregist.do")
 	public String staffRegistDo(Staff staff) {
+		System.out.println("냠"+staff);
 		service.staffRegist(staff);
 		return "redirect:main.do";
 	}
