@@ -24,5 +24,12 @@ public interface StaffDAO {
 	List<Staff> staffSearch(Staff staff);
 	
 	void deleteStaff(int staffNo);
+	
+	
+	
+	/*로그인*/
+	Staff selectLoginStaff(Staff staff);
+	
+	
 
 }

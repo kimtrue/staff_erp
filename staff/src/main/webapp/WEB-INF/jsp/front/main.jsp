@@ -15,7 +15,12 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-<body>
+<script type="text/javascript">
+if('${loginStaff}' ==''){
+	location.href="${pageContext.request.contextPath}/login/loginForm.do";
+}
+</script>
+
 	<div id="all">
 		<table>
 			<tbody>

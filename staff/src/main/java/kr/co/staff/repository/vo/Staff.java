@@ -22,4 +22,6 @@ public class Staff extends Pagination {
 	private String staffEmail;	
 	//사원전화번호
 	private String staffPh;
+	//사원 비번
+	private String password;
 }
