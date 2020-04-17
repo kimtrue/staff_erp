@@ -24,4 +24,27 @@ public class Staff extends Pagination {
 	private String staffPh;
 	//사원 비번
 	private String password;
+	
+	
+	
+	/*
+	@NotNull
+    @Size(min = 1, message = "이메일을 입력하십시오.")
+    @Pattern(regexp = "^([^@\\s])+[@][^@\\s]+[.][^@\\s]+", message = "올바른 이메일 형식이 아닙니다.")
+	private String staffEmail;
+	
+	
+	 public String getStaffEmail() {
+	        return staffEmail;
+	    }
+	 
+	    public void setStaffEmail(String staffEmail) {
+	        this.staffEmail = staffEmail;
+	    }
+	    
+	    */
+
+
+	
+	
 }

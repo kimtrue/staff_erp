@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
+
     
 <!DOCTYPE html>
 <html>
@@ -11,7 +13,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-<form method="post" action="doLogin.do">
+<form method="post" action="doLogin.do" onsubmit="validate();">
  <div class="cont">
         <div class="demo">
           <div class="login">
@@ -38,7 +40,9 @@
 </form>
 <script type="text/javascript">
 
-
+function validate() {
+	
+}
 
 
 
