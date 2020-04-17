@@ -18,7 +18,8 @@
 </style>
 </head>
 <body>
-
+	<form id="loginForm" action="doLogin.do" method="post">
+	
 		<div class="cont">
 			<div class="demo">
 				<div class="login">
@@ -50,6 +51,7 @@
 				</div>
 			</div>
 		</div>
+	</form>
 	<script type="text/javascript">
 
 
@@ -95,29 +97,39 @@ $("#signIn").click(() => {
 				staffEmail, 
 				password
 			},
-			success: list => doLogin(list)
+			success: list => {
+				if(list == ''){
+					$("#check").html("이메일/비밀번호를 다시 확인해주세요.")
+				} else {
+					$("#check").html("");
+					$("#loginForm").submit();
+				}
+			}
 		});
 	}
 });
 
 
-function doLogin(list) {
+function doCheck(list) {
 	console.log(list);
 	if(list == ''){
 		$("#check").html("이메일/비밀번호를 다시 확인해주세요.")
 	} else {
-		$.post({
-			url: "doLogin.do",
-			data: {
-				staffEmail, 
-				password
-			}
-			
-		})
+		$("#check").html("");
+		doLogin();
 	}
 }
 
-
+function doLogin(){
+	$.post({
+		url: "doLogin.do",
+		data: {
+			staffEmail, 
+			password
+		}
+		
+	})
+}
 
 
 
