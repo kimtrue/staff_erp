@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.staff.main.service.LoginService;
 import kr.co.staff.repository.vo.Staff;
@@ -20,21 +21,26 @@ public class LoginController {
 	@RequestMapping("/loginForm.do")
 	public void loginForm() {}
 	
+	@RequestMapping("/check.do")
+	@ResponseBody
+	public Staff staffCheck(Staff staff) {
+		Staff s = service.selectStaff(staff);
+		return s;
+	}
+	
 	
 	@RequestMapping("/doLogin.do")
 	public String staffLogin(Staff staff, HttpSession session) {
 		System.out.println("넘어왔다"+ staff);
-		
 		Staff s = service.selectStaff(staff);
 		System.out.println("오잉"+ s);
 		if(s == null) {
 			return "redirect:/login/loginForm.do";
 		}
 		session.setAttribute("loginStaff", s);
-		
 		return "redirect:/front/main.do";
 	}
-	
+
 	
 	
 	
